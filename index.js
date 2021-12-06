@@ -91,31 +91,21 @@ const standardizeInput = function (collection) {
       }
     });
   };
-  
-  // unpack is a helper function for myFlatten that is used when shallow is true
-  // It takes each element of the input array (whether it's a primitive value or
-  // an array) and pushes it into the output array
+ 
   const unpack = function (receiver, arr) {
     for (let val of arr) {
       receiver.push(val);
     }
   };
-  
-  // myFlatten handles two separate cases: shallow=true and shallow=false
-  // For the true case, the top-level elements are simply pushed into newArr using
-  // the unpack helper function
-  // For the false case, myFlatten is called recursively for each element
+
   const myFlatten = function (collection, shallow, newArr = []) {
     if (shallow) {
       for (let val of collection) {
         Array.isArray(val) ? unpack(newArr, val) : newArr.push(val);
       }
     } else {
-      // shallow = false (recursive case)
       for (let val of collection) {
         if (Array.isArray(val)) {
-          // Below, we pass newArr as an argument when we call myFlatten recursively
-          // because we need to retain the values that were pushed in previous calls
           myFlatten(val, false, newArr);
         } else {
           newArr.push(val);
@@ -124,8 +114,7 @@ const standardizeInput = function (collection) {
     }
     return newArr;
   };
-  
-  // Object Functions
+
   
   const myKeys = function (obj) {
     const keys = [];
